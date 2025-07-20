@@ -1,2 +1,2 @@
 # flowgateAppendR
-This program pertains to flow cytometry, a method of immunophenotyping. Here are fascinating applications of coding in academic medical research. 
+All programs in this repo pertain to flow cytometry analysis. Here are fascinating applications of coding in academic medical research. 
