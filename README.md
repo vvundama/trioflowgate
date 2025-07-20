@@ -1,2 +1,2 @@
 # flowgateAppendR
-This program loads an existing gating set, creates custom gating logic, and adds three cell subsets
+This program pertains to flow cytometry, a method of immunophenotyping. Here are fascinating applications of coding in academic medical research. 
