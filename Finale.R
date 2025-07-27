@@ -8,6 +8,8 @@ gs <- load_gs(gs_path)
 sampleNames(gs)
 gh <- gs[[1]]
 getNodes(gh)
+
+# Plots gateAppend.R 
 autoplot(gs[[1]], "NKTlike")
 autoplot(gs[[1]], "SenescentT")
 autoplot(gs[[1]], "DoublePositive")
