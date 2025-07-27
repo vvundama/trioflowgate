@@ -1,4 +1,3 @@
-# Load required libraries 
 library(flowWorkspace) 
 library(flowCore)
 library(openCyto)
@@ -21,7 +20,7 @@ robust_mindensity <- function(values, channel_name, sample_name, gate_range = NU
   if (!is.null(gate_range) && length(gate_range) == 2) {
     values <- values[values >= gate_range[1] & values <= gate_range[2]]
   }
-  # Accomodating empty gate range 
+  # Accommodating empty gate range 
   if (length(values) == 0) {
     warning("No values in gate range for ", channel_name, " in ", sample_name, " default to full range median.")
     values_full <- values[!is.na(values) & is.finite(values) & values >= 0]
@@ -51,7 +50,7 @@ robust_mindensity <- function(values, channel_name, sample_name, gate_range = NU
   return(thresh)
 }
 
-# Gating for NKT-like Cells: CD3+ & CD56+
+# Creating NKT-like gate
 .gate_CD3_CD56_nkt <- function(fr, channels) {
   sample_name <- identifier(fr)
   dat <- exprs(fr)[, channels]
@@ -61,7 +60,7 @@ robust_mindensity <- function(values, channel_name, sample_name, gate_range = NU
                 .gate = setNames(list(c(cd3_thresh, Inf), c(cd56_thresh, Inf)), channels))
 }
 
-# Gating for Senescent T Cells: CD3+ & CD57+
+# Creating Senescent T gate
 .gate_CD3_CD57_senescent <- function(fr, channels) {
   sample_name <- identifier(fr)
   dat <- exprs(fr)[, channels]
@@ -104,9 +103,7 @@ for (g in gs_files) {
     gh <- gs[[1]]
     fr <- gh_pop_get_data(gh, "/nonDebris/Lymphocytes/SingletCells/LiveCells/Tcells")
     
-    #2nd (min[[2]]) entry provides lower cutoff for BUV395-A
     cd8_min<-gs_pop_get_gate(gh,"CytotoxicT")[[1]]@min[[2]]
-    #1st (max[[1]]) entry provides higher cutoff for APC-Cy7-A
     cd4_min<-gs_pop_get_gate(gh,"CytotoxicT")[[1]]@max[[1]]
     
     double_pos_gate <- rectangleGate(
