@@ -49,7 +49,7 @@ robust_mindensity <- function(values, channel_name, sample_name) {
   return(thresh)
 }
 
-# NKT-like gating function
+# Creating NKT-like gate
 .gate_CD3_CD56_nkt <- function(fr, pp_res, ...) {
   cd3_channel <- "APC-A"
   cd56_channel <- "BV510-A"
@@ -70,7 +70,7 @@ robust_mindensity <- function(values, channel_name, sample_name) {
 }
 openCyto::register_plugins(fun = .gate_CD3_CD56_nkt, methodName = "gate_nkt")
 
-# Senescent T gating function
+# Creating Senescent T gate 
 .gate_CD3_CD57_senescent <- function(fr, pp_res, ...) {
   cd3_channel <- "APC-A"
   cd57_channel <- "PE-CF594-A"
@@ -144,7 +144,6 @@ for (f in fcsFiles) {
   gs <- flowCore::transform(gs,tf)
   print(paste0("biex transformation complete...",basename(f)))
   
-  #applying the template to the gating set
   gs_call <- try(do.call("gt_gating",args=list(template_test,gs)))
   if (class(gs_call)=="try-error"){
     D=D+1
@@ -156,7 +155,7 @@ for (f in fcsFiles) {
   
   flowFrame_data <- gh_pop_get_data(gs[[1]], "/nonDebris/Lymphocytes/SingletCells/LiveCells")
   
-  # NKT-like gate
+  # NKT-like added to gating set
   nkt_gate <- .gate_CD3_CD56_nkt(
     fr = flowFrame_data,
     pp_res = NULL,
@@ -165,7 +164,7 @@ for (f in fcsFiles) {
   gs_pop_add(gs, nkt_gate, parent = "/nonDebris/Lymphocytes/SingletCells/LiveCells")
   recompute(gs)
   
-  # Senescent T cell gate
+  # Senescent T added to gating set
   senescent_gate <- .gate_CD3_CD57_senescent(
     fr = flowFrame_data,
     pp_res = NULL,
